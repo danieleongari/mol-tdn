@@ -59,18 +59,18 @@ def get_iphase(phi):
     return i
 
 
-# NOTE: I I need to think more about this
-# def get_phase(mol, t, p, v, iphase):
-#     """Understand if the the phase is liquid (in this case could be also solid) or gas."""
-#     if t > mol.tc:
-#         phase = "supercritic"
-#     if not mol.vc:
-#         phase = "unknown"
-#     elif v > mol.vc:
-#         phase = "gas"
-#     else:
-#         phase = "liquid"
-#     return phase
+def get_phase(mol, t, p, v):
+    """Understand if the the phase is liquid (in this case could be also solid) or gas."""
+    if t > mol.tc and p > mol.pc:
+        phase = "supercritic"
+    else:
+        if not mol.vc:
+            phase = "unknown"
+        elif v > mol.vc:
+            phase = "gas"
+        else:
+            phase = "liquid"
+    return phase
 
 
 def plot_pv(mol, t, plim=[-100, 100], vlim=[1e-1, 1e1]):  #pylint: disable=dangerous-default-value # Dangerous default value [] as argument
@@ -134,9 +134,9 @@ def get_eos(mol, t, p=None, v=None, eos='pr', plot_fz=False):
     """
 
     if v and p:
-        raise ParameterError("Both pressure and volume are specified: specify ONLY one!")
+        raise RuntimeError("Both pressure and volume are specified: specify ONLY one!")
     if not v and not p:
-        raise ParameterError("Both pressure and volume are NOT specified: specify one!")
+        raise RuntimeError("Both pressure and volume are NOT specified: specify one!")
 
     ep = EosParameters(mol, t, eos)
 
@@ -173,7 +173,7 @@ def get_eos(mol, t, p=None, v=None, eos='pr', plot_fz=False):
         z_list.sort()  # [ z_liq, z_meaningless, z_vap ]
         z_list.pop(1)  # remove meaningless central value
 
-    rho, hr_adim, sr_adim, gr_adim, hr, sr, gr, phi = [], [], [], [], [], [], [], []
+    mdens, hr_adim, sr_adim, gr_adim, hr, sr, gr, phi = [], [], [], [], [], [], [], []
     for zsol in z_list:
 
         # Compute residual enthalpy (hr), entropy (sr) and Gibb's free energy (gr)
@@ -192,28 +192,30 @@ def get_eos(mol, t, p=None, v=None, eos='pr', plot_fz=False):
         hr.append(hr_adim[-1] * R * 100 * t)  # (kJ/mol) Residual Enthalpy
         sr.append(sr_adim[-1] * R * 100)  # (kJ/mol/K) Residual Entropy
         gr.append(gr_adim[-1] * R * 100 * t)  # (kJ/mol) Residual Gibb's Free Energy
-        rho.append(p / (R / 1000 * t * zsol))  # density (mol/L)
+        mdens.append(p / (R * 1000 * t * zsol))  # molar density (mol/L)
 
     iphase = get_iphase(phi)
-    # phase = get_phase(mol, t, p, v, iphase)
+    if p and not v:
+        v = 1.0 / mdens[iphase]
+    phase = get_phase(mol, t, p, v)
 
     res_dict = {
-        # "phase": phase,
+        "phase": phase,
         "temperature": t,
         "temperature_unit": "K",
         "temperature_reduced": ep.tr,
         "pressure": p,
         "pressure_unit": "bar",
         "pressure_reduced": p / mol.pc,
-        "molar_density": rho[iphase],
+        "molar_density": mdens[iphase],
         "molar_density_unit": "mol/L",
-        "density": rho[iphase] * mol.mm / 1000,
+        "density": mdens[iphase] * mol.mm / 1000,
         "density_unit": "g/cm^3",
         "fugacity_coefficient": phi[iphase],
         "compressibility_factor": z_list[iphase],
         "fugacity": phi[iphase] * p,
         "fugaciy_unit": "bar",
-        "molar_volume": 1.0 / rho[iphase],
+        "molar_volume": v,
         "molar_volume_unit": "L/mol",
         "enthalpy_reduced": hr[iphase],
         "enthalpy_reduced_unit": "kJ/mol",
@@ -229,5 +231,5 @@ def compute_eos(mol, t, p=None, v=None, eos='pr', plot_fz=False):
     """Get first the critical volume if not computed already, then get the eos."""
     if not mol.vc or mol.vc_eos != eos:
         mol.vc_eos = eos
-        mol.vc = get_eos(mol, t=mol.tc, p=mol.pc, eos=eos)
+        mol.vc = get_eos(mol, t=mol.tc, p=mol.pc, eos=eos)['molar_volume']
     return get_eos(mol, t, p, v, eos, plot_fz)

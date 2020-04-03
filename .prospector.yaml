@@ -5,6 +5,11 @@ ignore-paths:
 
 pylint:
   run: true
+  disable:
+    - too-many-arguments
+    - too-many-arguments
+    - too-many-function-args
+    - too-many-locals
 
 pyflakes:
   run: false
