@@ -1,5 +1,4 @@
-# mol-TDN
-## Thermodynamic properties of molecular fluids
+# mol-TDN: Thermodynamic properties of molecular fluids
 
 ## Examples
 * Compute density of methane at 100 bar using the Peng-Robinson equation of state:
