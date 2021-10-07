@@ -14,8 +14,11 @@ if __name__ == '__main__':
           classifiers=["Programming Language :: Python"],
           version="0.0.1",
           install_requires=["numpy", "pandas"],
-          extras_require={"pre-commit": [
-              "pre-commit==1.11.0",
-              "yapf==0.29.0",
-              "prospector==1.2.0",
-          ]})
+          extras_require={
+              "testing": ["pytest==6.*", "pytest-cov==2.*"],
+              "pre-commit": [
+                  "pre-commit==2.*",
+                  "yapf==0.31",
+                  "prospector==1.5",
+              ]
+          })
