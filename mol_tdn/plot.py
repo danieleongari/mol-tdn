@@ -1,5 +1,6 @@
 """Tools to plot nice diagrams."""
 import numpy as np
+# pylint: skip-file
 
 
 def plot_eos(mol, xyz="vpt", eos="pr", xlim=None, ylim=None, zlim=None, pstep=0.1, tstep=10, xlog=None, ylog=None):
