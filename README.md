@@ -1,5 +1,9 @@
 # mol-TDN: Thermodynamic properties of molecular fluids
 
+![GitHub branch checks state](https://img.shields.io/github/checks-status/danieleongari/mol-tdn/master)
+![PyPI](https://img.shields.io/pypi/v/mol-tdn)
+
+
 ## Examples
 * Compute density of methane at 100 bar using the Peng-Robinson equation of state:
 
