@@ -5,7 +5,7 @@ from .get_data import MOLECULE_DF, PERIODIC_TABLE_DF
 
 def search_in_csv(name):
     """Search for the molecular properties in the CSV database."""
-    mol_row = MOLECULE_DF.loc[MOLECULE_DF['Name'] == name.lower()]
+    mol_row = MOLECULE_DF.loc[MOLECULE_DF['Name'] == name.lower()]  # pylint: disable=unsubscriptable-object
     if len(mol_row) == 0:
         raise AttributeError
     formula = mol_row.Formula.values[0]
@@ -53,9 +53,9 @@ class Molecule:
 
     def info(self):
         """Print molecule's info."""
-        print("Molecule: {}".format(self.name))
-        print("\tChemical formula: {}".format(self.formula))
-        print("\tMolecular Mass: {:.1f} {}".format(self.mm, self.mm_unit))
-        print("\tCritical Temperature: {:.2f} {}".format(self.tc, self.tc_unit))
-        print("\tCritical Pressure: {:.2f} {}".format(self.pc, self.pc_unit))
-        print("\tAccentric factor: {:.3f}".format(self.af))
+        print(f"Molecule: {self.name}")
+        print(f"\tChemical formula: {self.formula}")
+        print(f"\tMolecular Mass: {self.mm:.1f} {self.mm_unit}")
+        print(f"\tCritical Temperature: {self.tc:.2f} {self.tc_unit}")
+        print(f"\tCritical Pressure: {self.pc:.2f} {self.pc_unit}")
+        print(f"\tAccentric factor: {self.af:.3f}")

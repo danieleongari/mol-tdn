@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    LONG_DESCRIPTION = fh.read()
+
 if __name__ == '__main__':
     setup(packages=find_packages(),
-          long_description=open('README.md').read(),
+          long_description=LONG_DESCRIPTION,
           long_description_content_type='text/markdown',
           name="mol-tdn",
           author="Daniele Ongari",
@@ -13,7 +16,7 @@ if __name__ == '__main__':
           license="Creative Commons",
           classifiers=["Programming Language :: Python"],
           version="0.0.1",
-          install_requires=["numpy", "pandas"],
+          install_requires=["numpy==1.*", "pandas==1.*", "matplotlib=3.*"],
           extras_require={
               "testing": ["pytest==6.*", "pytest-cov==2.*"],
               "pre-commit": [

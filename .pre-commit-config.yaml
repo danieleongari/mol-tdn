@@ -3,6 +3,7 @@
 
 # modernizer: removed because no more necessary to have Py2 compatibility!
 
+repos:
 - repo: local
   hooks:
   # yapf = yet another python formatter

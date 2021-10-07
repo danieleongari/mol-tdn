@@ -10,7 +10,7 @@ from .get_data import R
 class EosParameters:
     """Parameters for the EOS equations."""
 
-    def __init__(self, mol, t, eos):  #pylint: disable=too-many-arguments
+    def __init__(self, mol, t, eos):
         """Compute temperature-only dependent parameters and define the other one to be assigned later."""
         self.eos = eos
         self.tr = t / mol.tc
@@ -44,7 +44,7 @@ class EosParameters:
             self.w = -1
 
         for param in ["A", "B", "alpha", "beta", "gamma", "p", "q", "Delta"]:
-            exec("self.{} = None".format(param))
+            setattr(self, param, None)
 
 
 def get_iphase(phi):
