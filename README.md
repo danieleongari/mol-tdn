@@ -1,6 +1,6 @@
 # mol-TDN: Thermodynamic properties of molecular fluids
 
-![GitHub branch checks state](https://img.shields.io/github/checks-status/danieleongari/mol-tdn/master)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/danieleongari/mol-tdn/ci/master)
 ![PyPI](https://img.shields.io/pypi/v/mol-tdn)
 
 
