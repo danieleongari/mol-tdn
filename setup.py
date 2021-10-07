@@ -16,7 +16,7 @@ if __name__ == '__main__':
           license="Creative Commons",
           classifiers=["Programming Language :: Python"],
           version="0.0.1",
-          install_requires=["numpy==1.*", "pandas==1.*", "matplotlib=3.*"],
+          install_requires=["numpy==1.*", "pandas==1.*", "matplotlib==3.*"],
           extras_require={
               "testing": ["pytest==6.*", "pytest-cov==2.*"],
               "pre-commit": [
