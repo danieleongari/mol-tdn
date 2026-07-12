@@ -2,3 +2,8 @@
 *.swp
 *.egg-info/
 *.DS_Store
+.coverage
+.pytest_cache/
+.venv*/
+build/
+dist/
