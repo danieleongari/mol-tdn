@@ -9,3 +9,4 @@ coverage.xml
 build/
 dist/
 site/
+docs/assets/generated/

@@ -13,6 +13,7 @@ Run the tests, documentation build, and package build:
 
 ```bash
 pytest --cov=mol_tdn --cov-report=term-missing
+MPLBACKEND=Agg python scripts/generate_plot_gallery.py
 mkdocs build --strict
 python -m build
 twine check dist/*
