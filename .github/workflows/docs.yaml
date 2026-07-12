@@ -29,6 +29,17 @@ jobs:
           cache: pip
       - name: Install documentation dependencies
         run: python -m pip install --upgrade pip && python -m pip install ".[docs]"
+      - name: Generate plotting gallery
+        env:
+          MPLBACKEND: Agg
+        run: python scripts/generate_plot_gallery.py
+      - name: Upload plotting gallery
+        uses: actions/upload-artifact@v4
+        with:
+          name: plot-gallery-${{ github.sha }}
+          path: docs/assets/generated
+          if-no-files-found: error
+          retention-days: 30
       - name: Build documentation
         run: mkdocs build --strict
       - name: Configure Pages
