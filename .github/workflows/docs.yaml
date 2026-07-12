@@ -42,6 +42,16 @@ jobs:
           retention-days: 30
       - name: Build documentation
         run: mkdocs build --strict
+      - name: Verify rendered mathematics
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          html = Path("site/equations/index.html").read_text(encoding="utf-8")
+          assert 'class="arithmatex"' in html
+          assert "javascripts/mathjax.js" in html
+          assert "tex-mml-chtml.js" in html
+          PY
       - name: Configure Pages
         if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
