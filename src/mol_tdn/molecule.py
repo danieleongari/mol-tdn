@@ -19,7 +19,7 @@ def get_mol_mass(formula):
     """Compute molecular mass from the chemical formula."""
     formula_split = re.sub(r"([A-Z])", r" \1", formula).split()  # 'CH4Xe23Na' > ['C', 'H4', 'Xe23', 'Na']
     mol_mass = 0
-    for element in [re.split('(\d+)', x) for x in formula_split]:
+    for element in [re.split(r'(\d+)', x) for x in formula_split]:
         symbol = element[0]
         mass = PERIODIC_TABLE_DF[PERIODIC_TABLE_DF.Symbol == symbol]['AtomicMass'].values[0]
         coeff = int(element[1]) if len(element) > 1 else 1
