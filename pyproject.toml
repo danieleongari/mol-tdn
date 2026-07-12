@@ -28,6 +28,7 @@ dependencies = [
   "matplotlib>=3.6",
   "numpy>=1.23",
   "pandas>=1.5",
+  "plotly>=5.18",
 ]
 
 [project.optional-dependencies]
@@ -37,9 +38,14 @@ test = [
 ]
 dev = [
   "build>=1.2",
+  "mkdocs-material>=9.5",
   "pre-commit>=3.5",
   "pytest>=7.4",
   "pytest-cov>=4.1",
+]
+
+docs = [
+  "mkdocs-material>=9.5",
 ]
 
 [project.urls]

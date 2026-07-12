@@ -3,7 +3,9 @@
 *.egg-info/
 *.DS_Store
 .coverage
+coverage.xml
 .pytest_cache/
 .venv*/
 build/
 dist/
+site/
